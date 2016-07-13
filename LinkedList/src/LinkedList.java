@@ -1,7 +1,7 @@
 
 public class LinkedList {
 	
-	//Head of list
+	static //Head of list
 	Node head;
 	
 	//Inner class Node.  Static so that main can uise it.
@@ -17,28 +17,20 @@ public class LinkedList {
 			next = null;
 		}
 	}
-	//------------------Inner class ends-----------------------//
 	
 	
 	
-	//---------------main method------------------------------//
-	public static void main(String[] args) {
-		//built in data structure
-		LinkedList llist = new LinkedList();
+	//------------add node to head-----------------//
+	public void headInsert(int data){
+		//create new node and add data
+		Node new_node = new Node(data);
 		
-		//initialising nodes. Only data will be filled.
-		llist.head = new Node(1);
-		Node second = new Node(2);
-		Node third = new Node(3);
+		//make it point to head
+		new_node.next = head;
 		
-		//Connecting them
-		llist.head.next = second;
-		second.next = third;
-		
-		//print the data
-		llist.printList();
+		//make new node head
+		head = new_node;
 	}
-	//--------------------main ends--------------------------//
 	
 	
 	
@@ -51,6 +43,79 @@ public class LinkedList {
 			n = n.next;
 		}
 	}
-	//---------------printlist() ends----------------------//
+	
+	
+	//-------------Insert Node at middle, given any middle node------//
+	public void middleInsert(Node prev_node, int data){
+		//check if the node is null
+		if(prev_node == null){
+			System.out.println("The given node should not be null");
+			return;
+		}
+		
+		//create new node with data
+		Node new_node = new Node(data);
+		
+		//grab the next node from previous node and redirect prev node to new
+		new_node.next = prev_node.next;
+		prev_node.next = new_node;
+	}
+	
+	
+	//----------------Insert node at end--------------------//
+	public void append(int data){
+		//create node and put data
+		Node new_node = new Node(data);
+		
+		//if list is empty make this head node
+		if(head == null){
+			head = new_node;
+			return;
+		}
+		
+		//new node is pointing to null since it will be last
+		new_node.next = null;
+		
+		//traverse till the last node
+		Node last = head;
+		while(last.next != null){
+			last = last.next;
+		}
+		
+		last.next = new_node;
+	}
+	
+		
+	
+	//---------------main method------------------------------//
+		public static void main(String[] args) {
+			//built in data structure
+			LinkedList llist = new LinkedList();
+			
+			//insert first node
+			System.out.println("Appending 0");
+			llist.append(0);
+			llist.printList();
+			
+			//add head node
+			System.out.println("Adding -1 as head");
+			llist.headInsert(-1);
+			llist.printList();
+			
+			//add node to middle
+			System.out.println("Adding node after -1");
+			llist.middleInsert(head, 10);
+			llist.printList();
+			
+			//adding node after 10
+			System.out.println("Adding node after 10");
+			llist.middleInsert(head.next,20);
+			llist.printList();
+			
+			//add after 20
+			System.out.println("adding after 20");
+			llist.middleInsert(head.next.next,30);
+			llist.printList();
+		}
 	
 }
